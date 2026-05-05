@@ -110,7 +110,12 @@
             :content-style="{ display: 'flex', alignItems: 'center' }"
           >
             <div class="desc" :style="{ opacity: element.show ? null : 0.6 }">
-              <img class="logo" :src="`/logo/${element.name}.png`" alt="logo" />
+              <img
+                class="logo"
+                :src="`/logo/${element.name}.png`"
+                alt="logo"
+                @error="setLogoFallback"
+              />
               <n-text class="news-name" v-html="element.label" />
             </div>
             <n-switch
@@ -196,6 +201,10 @@ const themeAutoOpen = (val) => {
 const restoreDefault = () => {
   newsArr.value = newsArr.value.sort((a, b) => a.order - b.order);
   $message.success("恢复默认榜单排序成功");
+};
+
+const setLogoFallback = (event) => {
+  event.target.src = "/ico/icon_error.png";
 };
 
 // 将排序结果写入

@@ -12,7 +12,12 @@
       >
         {{ item.label }}
         <template #avatar>
-          <img :src="`/logo/${item.name}.png`" alt="logo" class="logo" />
+          <img
+            :src="`/logo/${item.name}.png`"
+            alt="logo"
+            class="logo"
+            @error="setLogoFallback"
+          />
         </template>
       </n-tag>
     </n-space>
@@ -27,7 +32,7 @@
           <template v-else>
             <div class="header">
               <div class="logo">
-                <img :src="`/logo/${listType}.png`" alt="logo" />
+                <img :src="`/logo/${listType}.png`" alt="logo" @error="setLogoFallback" />
               </div>
               <div class="name">
                 <n-text class="title">{{ listData.title }}</n-text>
@@ -174,6 +179,10 @@ const changeType = (type) => {
       page: 1,
     },
   });
+};
+
+const setLogoFallback = (event) => {
+  event.target.src = "/ico/icon_error.png";
 };
 
 // 实时改变更新时间
